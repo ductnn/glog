@@ -13,7 +13,7 @@ import (
 
 const (
 	CommonLogFormat = "%s - \"%s %s %s\" %d %d"
-	TimeLogFormat   = "2022-12-08T13:20:00Z"
+	TimeLogFormat   = "2006-01-02T15:04:05-0700"
 )
 
 var (
@@ -60,7 +60,7 @@ func RandHTTPVersion() string {
 }
 
 func InfoLog() string {
-	return color.GreenString("INFO: " + color.WhiteString("This is Info an log message "))
+	return color.GreenString("INFO:    " + color.WhiteString("This is Info an log message    "))
 }
 
 func WarningLog() string {
@@ -68,11 +68,11 @@ func WarningLog() string {
 }
 
 func ErrorLog() string {
-	return color.RedString("ERROR: " + color.WhiteString("This is error an log message "))
+	return color.RedString("ERROR:   " + color.WhiteString("This is error an log message   "))
 }
 
 func DebugLog() string {
-	return color.BlueString("DEBUG: " + color.WhiteString("This is debug an log message "))
+	return color.BlueString("DEBUG:   " + color.WhiteString("This is debug an log message   "))
 }
 
 func GenerateMsg(arr []string) string {
