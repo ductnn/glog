@@ -17,21 +17,19 @@ const (
 )
 
 var (
+	infoLog    = InfoLog()
+        warningLog = WarningLog()
+        errorLog   = ErrorLog()
+        debugLog   = DebugLog()
+
 	created = time.Now()
 	delay   = time.Second
 
 	interval time.Duration
 )
 
-var (
-	infoLog    = InfoLog()
-	warningLog = WarningLog()
-	errorLog   = ErrorLog()
-	debugLog   = DebugLog()
-)
-
 func NewCommonLogFormat(t time.Time) string {
-	return fmt.Sprintf(
+	return color.HiWhiteString(
 		CommonLogFormat,
 		gofakeit.IPv4Address(),
 		gofakeit.HTTPMethod(),
@@ -60,19 +58,19 @@ func RandHTTPVersion() string {
 }
 
 func InfoLog() string {
-	return color.GreenString("INFO:    " + color.WhiteString("This is Info an log message    "))
+	return (color.HiGreenString("INFO:    ") + color.WhiteString("This is Info an log message    "))
 }
 
 func WarningLog() string {
-	return color.YellowString("WARNING: " + color.WhiteString("This is warning an log message "))
+	return (color.HiYellowString("WARNING: ") + color.WhiteString("This is warning an log message "))
 }
 
 func ErrorLog() string {
-	return color.RedString("ERROR:   " + color.WhiteString("This is error an log message   "))
+	return (color.HiRedString("ERROR:   ") + color.WhiteString("This is error an log message   "))
 }
 
 func DebugLog() string {
-	return color.BlueString("DEBUG:   " + color.WhiteString("This is debug an log message   "))
+	return (color.HiBlueString("DEBUG:   ") + color.WhiteString("This is debug an log message   "))
 }
 
 func GenerateMsg(arr []string) string {
@@ -81,7 +79,7 @@ func GenerateMsg(arr []string) string {
 
 	for {
 		time.Sleep(1 * delay)
-		fmt.Println(created.Format(TimeLogFormat) + " " + arr[rand.Intn(l)] + color.HiWhiteString(log))
+		fmt.Println(color.HiWhiteString(created.Format(TimeLogFormat)) + " " + arr[rand.Intn(l)] + log)
 	}
 }
 
