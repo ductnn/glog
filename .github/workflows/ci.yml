@@ -41,5 +41,5 @@ jobs:
           context: ./
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/loo:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/glog:latest
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
