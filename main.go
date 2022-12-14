@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math/rand"
 	"net/url"
+	"strconv"
 	"strings"
 	"time"
 
@@ -18,9 +19,9 @@ const (
 
 var (
 	infoLog    = InfoLog()
-        warningLog = WarningLog()
-        errorLog   = ErrorLog()
-        debugLog   = DebugLog()
+	warningLog = WarningLog()
+	errorLog   = ErrorLog()
+	debugLog   = DebugLog()
 
 	created = time.Now()
 	delay   = time.Second
@@ -31,7 +32,8 @@ var (
 func NewCommonLogFormat(t time.Time) string {
 	return color.HiWhiteString(
 		CommonLogFormat,
-		gofakeit.IPv4Address(),
+		// gofakeit.IPv4Address(),
+		randIP(),
 		gofakeit.HTTPMethod(),
 		RandResourceURI(),
 		RandHTTPVersion(),
@@ -58,33 +60,47 @@ func RandHTTPVersion() string {
 }
 
 func InfoLog() string {
-	return (color.HiGreenString("INFO:    ") + color.WhiteString("This is Info an log message    "))
+	return (color.HiGreenString("INFO:    "))
 }
 
 func WarningLog() string {
-	return (color.HiYellowString("WARNING: ") + color.WhiteString("This is warning an log message "))
+	return (color.HiYellowString("WARNING: "))
 }
 
 func ErrorLog() string {
-	return (color.HiRedString("ERROR:   ") + color.WhiteString("This is error an log message   "))
+	return (color.HiRedString("ERROR:   "))
 }
 
 func DebugLog() string {
-	return (color.HiBlueString("DEBUG:   ") + color.WhiteString("This is debug an log message   "))
+	return (color.HiBlueString("DEBUG:   "))
+}
+
+func randIP() string {
+	ips := []string{}
+	min := 1
+	max := 255
+
+	for j := 0; j < 4; j++ {
+		random := strconv.Itoa(rand.Intn(max-min) + min)
+		ips = append(ips, random)
+	}
+
+	return strings.Join(ips, ".")
 }
 
 func GenerateMsg(arr []string) string {
 	l := len(arr)
-	log := NewCommonLogFormat(created)
 
-	for {
-		time.Sleep(1 * delay)
-		fmt.Println(color.HiWhiteString(created.Format(TimeLogFormat)) + " " + arr[rand.Intn(l)] + log)
-	}
+	return (color.HiWhiteString(created.Format(TimeLogFormat)) + " " + arr[rand.Intn(l)])
 }
 
 func main() {
 	arr := []string{infoLog, warningLog, errorLog, debugLog}
+	log := NewCommonLogFormat(created)
 
-	GenerateMsg(arr)
+	for {
+		time.Sleep(1 * delay)
+		fmt.Println(GenerateMsg(arr) + " " + log)
+		created = created.Add(interval)
+	}
 }
